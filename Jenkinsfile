@@ -28,9 +28,12 @@ pipeline {
         }
 
         stage("Running Test command") {
+            
             steps {
                 sh '''
-                    cd build && ls -la | grep index.html
+                    ls -la | grep index.html
+                    echo "Running test command ******** "
+                    CI=true npm test -- --watchAll=false
                    '''
             }
         }
