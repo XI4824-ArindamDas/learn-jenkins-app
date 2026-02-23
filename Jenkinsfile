@@ -30,7 +30,7 @@ pipeline {
         stage("Running Test command") {
             steps {
                 sh '''
-                     ls -la | grep index.html
+                    cd build && ls -la | grep index.html
                    '''
             }
         }
