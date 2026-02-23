@@ -30,8 +30,8 @@ pipeline {
         stage("Running Test command") {
             steps {
                 sh '''
-                    echo "Running test command"
-                  '''
+                     ls -la | grep index.html
+                   '''
             }
         }
     }
