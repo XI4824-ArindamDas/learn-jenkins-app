@@ -31,7 +31,7 @@ pipeline {
             
             steps {
                 sh '''
-                    ls -la | grep index.html
+                    test -f build/index.html
                     echo "Running test command ******** "
                     CI=true npm test -- --watchAll=false
                    '''
