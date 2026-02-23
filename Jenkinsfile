@@ -45,12 +45,14 @@ pipeline {
                     reuseNode true
                 }
             }
-
             steps {
-                sh ''' 
-                    npx serve -s build &
-                    sleep 13
+                sh '''
+                    npm install -g wait-on
+                    (npx serve -s build &)
+                    WAIT_ON_PID=$!
+                    wait-on http://localhost:3000
                     npx playwright test
+                    kill $WAIT_ON_PID
                    '''
             }
         }
@@ -58,11 +60,8 @@ pipeline {
 
     post {
         always {
-            sh '''
-                 echo "$PWD"
-                 ls
-               '''
             junit 'test-results/junit.xml'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
