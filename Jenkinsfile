@@ -41,6 +41,10 @@ pipeline {
 
     post {
         always {
+            sh '''
+                 echo "$PWD"
+                 ls
+               '''
             junit 'test-results/junit.xml'
         }
     }
