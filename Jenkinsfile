@@ -14,10 +14,14 @@ pipeline {
                         ls -la
                         npm --version
                         node --version
-                        export npm_config_catch="$PWD/.npm-catch"
-                        npm config set cache "$npm_config_cache" --global || true
-                        npm install
+                        export HOME="$PWD"
+                        export npm_config_cache="$PWD/.npm-cache"
+                        mkdir -p "$npm_config_cache"
+                        # clean old dependency
+                        rm -rf node_modules
+                        npm ci --no-audit --no-fund
                         npm run build
+
                         ls -la
                    '''
             }
